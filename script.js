@@ -1,16 +1,8 @@
 // Basic operation functions
-function add(n1, n2) {
-    return n1 + n2;
-}
-function subtract(n1, n2) {
-    return n1 - n2;
-}
-function multiply(n1, n2) {
-    return n1 * n2;
-}
-function divide(n1, n2) {
-    return n1 / n2;
-}
+const add = (n1, n2) => n1 + n2;
+const subtract = (n1, n2) => n1 - n2;
+const multiply = (n1, n2) => n1 * n2;
+const divide = (n1, n2) => n1 / n2;
 
 // generic operation function
 function operate(n1, operator, n2) {
