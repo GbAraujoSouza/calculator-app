@@ -54,6 +54,7 @@ body {
     font-weight: 500;
     transition: .1s;
     cursor: pointer;
+    user-select: none;
 }
 
 .btn:hover {
