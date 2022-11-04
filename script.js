@@ -38,6 +38,7 @@ function handleClickBtn() {
         
         case 'DEL':
             //delete last character on display
+            deleteDisplay();
             break;
         
         case '=':
@@ -47,5 +48,12 @@ function handleClickBtn() {
         default:
             displayText.innerText += btnText;
     }
+}
 
+function clearDisplay(){
+    displayText.innerText = '';
+}
+
+function deleteDisplay(){
+    displayText.innerText = displayText.innerText.slice(0, displayText.innerText.length - 1);
 }
