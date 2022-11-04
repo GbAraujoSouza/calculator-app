@@ -17,3 +17,35 @@ function operate(n1, operator, n2) {
             return divide(n1, n2);
     }
 }
+
+const displayText = document.querySelector('.display');
+let btnContainer = document.querySelector('.btn-container-grid').children;
+btnContainer = [...btnContainer];  // Turn list node into array
+
+btnContainer.forEach(btn => {
+    btn.addEventListener('click', handleClickBtn);
+});
+
+
+function handleClickBtn() {
+
+    const btnText = this.dataset['value'];
+
+    switch (btnText) {
+        case 'CLEAR':
+            clearDisplay();
+            break;
+        
+        case 'DEL':
+            //delete last character on display
+            break;
+        
+        case '=':
+            // compute and show last result
+            break;
+        
+        default:
+            displayText.innerText += btnText;
+    }
+
+}
