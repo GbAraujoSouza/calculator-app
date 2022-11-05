@@ -1,3 +1,22 @@
+const displayText = document.querySelector('.display');
+let btnContainer = document.querySelector('.btn-container-grid').children;
+btnContainer = [...btnContainer];  // Turn list node into array
+
+btnContainer.forEach(btn => {
+    btn.addEventListener('click', handleClickBtn);
+});
+
+// Flag for check for the need of clearing the display
+let newDisplayFlag = false;
+
+function checkNewDisplay() {
+    if (newDisplayFlag)
+    {
+        clearDisplay();
+        newDisplayFlag = false;
+    }
+}
+
 // Basic operation functions
 const add = (n1, n2) => n1 + n2;
 const subtract = (n1, n2) => n1 - n2;
@@ -22,15 +41,6 @@ function operate(operation) {
     }
 }
 
-const displayText = document.querySelector('.display');
-let btnContainer = document.querySelector('.btn-container-grid').children;
-btnContainer = [...btnContainer];  // Turn list node into array
-
-btnContainer.forEach(btn => {
-    btn.addEventListener('click', handleClickBtn);
-});
-
-
 function handleClickBtn() {
 
     const btnText = this.dataset['value'];
@@ -48,7 +58,6 @@ function handleClickBtn() {
         case '=':
             let op = displayText.innerText;
             while(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)) {
-                console.log(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0])
                 let result = operate(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0])
                 op = op.replace(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0], result)
             }
@@ -57,9 +66,15 @@ function handleClickBtn() {
                 op = op.replace(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)[0], result)
             }
             displayText.innerText = op;
+
+            newDisplayFlag = true;
             break;
         
         default:
+            if (!(btnText.match(/[+\-*\/]/))) {
+                checkNewDisplay()
+            }
+            newDisplayFlag = false;
             displayText.innerText += btnText;
     }
 }
@@ -71,18 +86,3 @@ function clearDisplay(){
 function deleteDisplay(){
     displayText.innerText = displayText.innerText.slice(0, displayText.innerText.length - 1);
 }
-
-op = '12+7-5*3';
-while(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)) {
-    console.log(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0])
-    let result = operate(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0])
-    op = op.replace(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0], result)
-}
-while(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)) {
-    let result = operate(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)[0])
-    op = op.replace(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)[0], result)
-}
-
-console.log(op)
-
-    // match operation with regex -> /([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/g
