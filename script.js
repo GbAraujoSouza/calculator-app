@@ -5,7 +5,11 @@ const multiply = (n1, n2) => n1 * n2;
 const divide = (n1, n2) => n1 / n2;
 
 // generic operation function
-function operate(n1, operator, n2) {
+function operate(operation) {
+    let n1 = parseFloat(operation.match(/\d+[+\-*\/]/));
+    let n2 = parseFloat(operation.match(/[+\-*\/]\d+/)[0][1]);
+    let operator = operation.match(/[+\-*\/]/)[0];
+
     switch (operator) {
         case '+':
             return add(n1, n2);
