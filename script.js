@@ -6,8 +6,8 @@ const divide = (n1, n2) => n1 / n2;
 
 // generic operation function
 function operate(operation) {
-    let n1 = parseFloat(operation.match(/\d+[+\-*\/]/));
-    let n2 = parseFloat(operation.match(/[+\-*\/]\d+/)[0][1]);
+    let n1 = parseFloat(operation.match(/([0-9]*[.])?[0-9]+[+\-*\/]/));
+    let n2 = parseFloat(operation.match(/[+\-*\/]([0-9]*[.])?[0-9]+/)[0].slice(1));
     let operator = operation.match(/[+\-*\/]/)[0];
 
     switch (operator) {
@@ -46,7 +46,17 @@ function handleClickBtn() {
             break;
         
         case '=':
-            // compute and show last result
+            let op = displayText.innerText;
+            while(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)) {
+                console.log(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0])
+                let result = operate(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0])
+                op = op.replace(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0], result)
+            }
+            while(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)) {
+                let result = operate(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)[0])
+                op = op.replace(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)[0], result)
+            }
+            displayText.innerText = op;
             break;
         
         default:
@@ -61,3 +71,18 @@ function clearDisplay(){
 function deleteDisplay(){
     displayText.innerText = displayText.innerText.slice(0, displayText.innerText.length - 1);
 }
+
+op = '12+7-5*3';
+while(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)) {
+    console.log(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0])
+    let result = operate(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0])
+    op = op.replace(op.match(/([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/)[0], result)
+}
+while(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)) {
+    let result = operate(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)[0])
+    op = op.replace(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)[0], result)
+}
+
+console.log(op)
+
+    // match operation with regex -> /([0-9]*[.])?[0-9]+[*\/]([0-9]*[.])?[0-9]+/g
