@@ -65,7 +65,7 @@ function handleClickBtn() {
                 let result = operate(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)[0])
                 op = op.replace(op.match(/([0-9]*[.])?[0-9]+[+\-]([0-9]*[.])?[0-9]+/)[0], result)
             }
-            displayText.innerText = op;
+            displayText.innerText = (op === "Infinity") ? `Can't divide by 0!` : op;
 
             newDisplayFlag = true;
             break;
